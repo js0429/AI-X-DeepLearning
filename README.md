@@ -1,2 +1,3 @@
 # AI-X-DeepLearning
-신지성, 권영진, 종예기
+### Members
+*신지성, 권영진, 종예기
