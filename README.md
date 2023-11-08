@@ -1,11 +1,11 @@
 # AI-X-DeepLearning
 ##목차
-1. [Proposal](#I.-Proposal)
-2. [Datasets](#II.-Datasets)
-3. [Methodology](#III.-Methodology)
-4. [Evaluation & Analysis](#IV.-Evaluation-&-Analysis)
-5. [Related Work](#V.-Related-work)
-6. [Conclusion](#VI.-Conclusion:-Discussion)
+1. [Proposal](I.-Proposal)
+2. [Datasets](II.-Datasets)
+3. [Methodology](III.-Methodology)
+4. [Evaluation & Analysis](IV.-Evaluation-&-Analysis)
+5. [Related Work](V.-Related-work)
+6. [Conclusion](VI.-Conclusion:-Discussion)
    
 ##Title:
 ## Members
