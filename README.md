@@ -6,8 +6,7 @@
 3. [Methodology](#iii-methodology)
 4. [Evaluation & Analysis](#iv-evaluation--analysis)
 5. [Related Work](#v-related-work)
-6. [Conclusion](#vi-conclusion:-discussion)
-7. [Related Work](#v-related-work)
+6. [Conclusion](#vi-conclusion-discussion)
 
 ## Title:
 ## Members
