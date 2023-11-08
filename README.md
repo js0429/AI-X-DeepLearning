@@ -6,7 +6,7 @@
 3. [Methodology](#iii.-methodology)
 4. [Evaluation & Analysis](#iv.-evaluation-&-analysis)
 5. [Related Work](#v.-related-work)
-6. [Conclusion](#vi.-conclusion:-discussion)
+6. [Conclusion](#안됨)
 
 ## Title:
 ## Members
@@ -30,5 +30,5 @@
 ## V. Related Work
 ### Tools, libraries, blogs, or any documentation that we have used to do this project
 
-## VI. Conclusion: Discussion
+## VI. 안됨
 ### Feel free to use any format we like
