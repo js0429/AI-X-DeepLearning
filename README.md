@@ -1,5 +1,6 @@
 # AI-X-DeepLearning
-##목차
+## 목차
+
 1. [Proposal](#i.-proposal)
 2. [Datasets](#ii.-datasets)
 3. [Methodology](#iii.-methodology)
@@ -7,27 +8,27 @@
 5. [Related Work](#v.-related-work)
 6. [Conclusion](#vi.-conclusion:-discussion)
 
-##Title:
+## Title:
 ## Members
 - 신지성
 - 권영진
 - 종예기
 
-##I. Proposal
-###Motivation
-###Goal
+## I. Proposal
+### Motivation
+### Goal
 
-##II. Datasets
+## II. Datasets
 
-##III. Methodology
-###Algorithms
-###features
+## III. Methodology
+### Algorithms
+### features
 
-##IV. Evaluation & Analysis
-###Graphs, tables, any statistics
+## IV. Evaluation & Analysis
+### Graphs, tables, any statistics
 
-##V. Related Work
-###Tools, libraries, blogs, or any documentation that we have used to do this project
+## V. Related Work
+### Tools, libraries, blogs, or any documentation that we have used to do this project
 
-##VI. Conclusion: Discussion
-###Feel free to use any format we like
+## VI. Conclusion: Discussion
+### Feel free to use any format we like
