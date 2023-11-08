@@ -1,12 +1,12 @@
 # AI-X-DeepLearning
 ##목차
-1. [Proposal](I.-Proposal)
-2. [Datasets](II.-Datasets)
-3. [Methodology](III.-Methodology)
-4. [Evaluation & Analysis](IV.-Evaluation-&-Analysis)
-5. [Related Work](V.-Related-work)
-6. [Conclusion](VI.-Conclusion:-Discussion)
-   
+1. [Proposal](#i.-proposal)
+2. [Datasets](#ii.-datasets)
+3. [Methodology](#iii.-methodology)
+4. [Evaluation & Analysis](#iv.-evaluation-&-analysis)
+5. [Related Work](#v.-related-work)
+6. [Conclusion](#vi.-conclusion:-discussion)
+
 ##Title:
 ## Members
 - 신지성
