@@ -11,7 +11,7 @@
 ## Title: 교통체증 구간 예측
 ## Members
 - 신지성 | 한양대 에리카 ICT융합학부 js0429@hanyang.ac.kr
-- 권영진 | 한양대 에리카 ICT융합학부
+- 권영진 | 한양대 에리카 ICT융합학부 zjekfks@hanyang.ac.kr
 - 종예기 | 한양대 에리카 정보사회미디어
 
 ## I. Proposal
