@@ -20,30 +20,30 @@
 ### Goal
 우리의 골은 특정한 상황이 주어젔을 때 어느 정도의 교통체증이 일어날지를 예측하는 모델을 만드는 것이고 우리가 일반적으로 생각하지 못했던 교통체증 원인도 발견하길 기대한다. 
 ## II. Datasets
-국내의 교통과 관련된 데이터셋을 만들기 위해 경기도 교통DB, 국가교통 데이터에서 가져온 데이터를 사용한다.<br>
-파이썬의 판다스 모듈을 사용하여 행과 열의 속성을 가지는 자료형인 데이터프레임을 처리할 것이고 가져온 파일 형식은 csv이다<br>
-먼저 행의 항목에 올 것은 읍면동이기 때문에 읍면동을 기준으로 여기저기서 갖고온 데이터들을 병합하는 것이 목표이며 타겟 데이터는 시간대별 교통량이다<br>
+국내의 교통과 관련된 데이터셋을 만들기 위해 경기도 교통DB, 국가교통 데이터에서 가져온 데이터를 사용한다.  
+파이썬의 판다스 모듈을 사용하여 행과 열의 속성을 가지는 자료형인 데이터프레임을 처리할 것이고 가져온 파일 형식은 csv이다  
+먼저 행의 항목에 올 것은 읍면동이기 때문에 읍면동을 기준으로 여기저기서 갖고온 데이터들을 병합하는 것이 목표이며 타겟 데이터는 시간대별 교통량이다  
 
-각기 다른 데이터셋마다 읍면동을 표현하는 것이 조금씩 차이가 있기 때문에 읍면동의 데이터들의 형식을 통일해야 한다.<br>
-(읍면동의 데이터 형식을 통일하는 코드 넣을 것)<br>
+각기 다른 데이터셋마다 읍면동을 표현하는 것이 조금씩 차이가 있기 때문에 읍면동의 데이터들의 형식을 통일해야 한다.  
+(읍면동의 데이터 형식을 통일하는 코드 넣을 것)  
 
-import pandas as pd<br>
-df1=pd.read_execl('./일반국도 1-6.xlsx')<br>
-df2=pd.read_execl('./일반국도 17-38.xlsx')<br>
-df3=pd.read_execl('./일반국도 39-43.xlsx')<br>
-df4=pd.read_execl('./일반국도 44-46.xlsx')<br>
-df5=pd.read_execl('./일반국도 47-75.xlsx')<br>
-df6=pd.read_execl('./일반국도 77-87.xlsx')<br>
+import pandas as pd  
+df1=pd.read_execl('./일반국도 1-6.xlsx')  
+df2=pd.read_execl('./일반국도 17-38.xlsx')  
+df3=pd.read_execl('./일반국도 39-43.xlsx')  
+df4=pd.read_execl('./일반국도 44-46.xlsx')  
+df5=pd.read_execl('./일반국도 47-75.xlsx')  
+df6=pd.read_execl('./일반국도 77-87.xlsx')  
 
-df=pd.concat([df1,df2,df3,df4,df,df6])<br>
-df.to_csv('./result.csv')<br>
+df=pd.concat([df1,df2,df3,df4,df,df6])  
+df.to_csv('./result.csv')  
 
-df_time=pd.read_csv('./result')<br>
-df_ground=pd.read_csv('./대도시 미개발 토지 정보.csv')<br>
-df_time=df_time[['지점번호','시간대','행정구역','지점번호','전차종합계']]<br>
-df=df.merge(df_ground, how='inner', on='행정구역')<br>
+df_time=pd.read_csv('./result')  
+df_ground=pd.read_csv('./대도시 미개발 토지 정보.csv')  
+df_time=df_time[['지점번호','시간대','행정구역','지점번호','전차종합계']]  
+df=df.merge(df_ground, how='inner', on='행정구역')  
 
-(결과로 나온 파일은 깃헙에 올릴 것)<br>
+(결과로 나온 파일은 깃헙에 올릴 것)  
 ## III. Methodology
 ### Algorithms
 
