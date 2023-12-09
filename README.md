@@ -55,11 +55,6 @@ df=df.merge(df_ground, how='inner', on='행정구역')
 
     &nbsp; 많은 상황에서 쓰였을 때 일반적으로 좋은 성능을 보이는 알고리즘이기에 하나의 방법으로 채택하였다.  
   
- * <b>단순 선형 회귀(Linear Regression) :</b>  
-
-    &nbsp; 데이터를 정의하는 가장 최적의 선을 찾아 분류하는 방법   
-
-    &nbsp; 데이터셋을 고려했을때 특성(Feature)에 대한 목표값(Target)의 변화를 예측하는것에 적절히 사용될 수 있다고 생각해 채택하였다.  
 
 * <b>랜덤 포레스트(Random Forest) :</b>    
       
@@ -70,22 +65,87 @@ df=df.merge(df_ground, how='inner', on='행정구역')
   
 ### Features
 
-  <b>목표값(Target Feature)</b> : 시간별 교통량에 따른 교통체증의 정도(1 ~ 0 로 표현)
+  <b>목표값(Target Feature)</b> : 시간별 교통량에 따른 교통체증의 정도
 
 <b>특성(Features)</b>   
   
-  * 미개발 토지 : (값에대한 설명)
+  * 미개발 토지 : 지역에 대한 미개발 토지의 수 로 지역의 면적대비 활성도로 활용한다
 
-  * 추정 교통량 : (값에대한 설명)
+  * 추정 교통량 : 지역의 전체적인 평균 교통량으로 목표값과의 비교목적으로 활용한다
 
-  * 역세권 실거래 정보 : (값에대한 설명)
+  * 역세권 실거래 정보 : 지역에대한 가치를 간접적으로 평가할 목적으로 활용한다
 
-  * 평균 속도 : (값에대한 설명)
-
-  * 속하는 시/군/구 의 상권 활성도 : (값에대한 설명)
+  * 평균 속도 : 지역에서 차량들의 평균 속도로 도로 상태를 평가할 목적으로 활용한다
 
 ## IV. Evaluation & Analysis
 ### Graphs, tables, any statistics
+
+
+먼저 판다스로 csv형식의 데이터셋을 읽어온다.
+```python
+import pandas as pd
+
+df=pd.read_csv("./dataset.csv") # 데이터셋 읽어들이기
+```
+
+그런 다음, 이번 경우에는 불완전한 행을 Evaluation 하기에는 데이터의 분포가 불균형적이기때문에 <b>dropna()</b> 함수를 이용해 결측값이 있는 행은 삭제하기로 했다.
+```python
+df = df.dropna() #결측값이 있는 행 삭제
+```
+
+지역 이름은 인덱스와 같은 역할을 하고있기때문에 <b>drop()</b> 함수로 삭제해주고, 목표값과 특성을 정의해준다
+```python
+df = df.drop('area', axis=1)
+
+X=df.drop('total_vehicle_amount',axis=1)
+y=df['total_vehicle_amount']
+```
+
+학습을 위한 훈련용 데이터와 데스트에 쓰일 데이터를 분리한다
+```python
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=50)
+```
+
+
+랜덤포레스트 모델을 불러오고 훈련시킨다
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+rand_clf = RandomForestClassifier(criterion='entropy', random_state=42)
+
+rand_clf.fit(X_train, y_train)  
+rand_predicted = rand_clf.predict(X_test)
+```
+
+모델의 정확도를 평가한다
+```python
+from sklearn.metrics import accuracy_score
+
+rand_accuracy = accuracy_score(y_test, rand_predicted)
+
+print('랜덤 포레스트 정확도: {:.3f}' .format(rand_accuracy))
+```
+
+나이브베이스 모델을 불러오고 훈련시킨다
+```python
+from sklearn.naive_bayes import GaussianNB
+
+NB_clf = GaussianNB()
+
+NB_clf.fit(X_train, y_train)
+nb_predicted = NB_clf.predict(X_test)
+```
+
+모델의 정확도를 평가한다
+```python
+from sklearn.metrics import accuracy_score
+
+nb_accuracy = accuracy_score(y_test, nb_predicted)
+
+print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
+```
 
 ## V. Related Work
 ### Tools, libraries, blogs, or any documentation that we have used to do this project
