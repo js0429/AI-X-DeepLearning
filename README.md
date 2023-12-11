@@ -101,6 +101,15 @@ X=df.drop('total_vehicle_amount',axis=1)
 y=df['total_vehicle_amount']
 ```
 
+예측 정확도 향상을 위해 목표값을 각각 전체 목표값의 평균으로 나누어준다
+```python
+
+df['total_vehicle_amount'] = pd.to_numeric(df['total_vehicle_amount'], errors='coerce') # 문자열로 인식되었기에 숫자로 바꿔주었다
+# errors='coerce' 는 숫자가 아닌 항목을 Nan으로 처리해준다
+
+df['total_vehicle_amount'] = df['total_vehicle_amount'] // df['total_vehicle_amount'].mean()
+```
+
 학습을 위한 훈련용 데이터와 데스트에 쓰일 데이터를 분리한다
 ```python
 from sklearn.model_selection import train_test_split
