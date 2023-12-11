@@ -158,6 +158,13 @@ print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
 
 ## V. Related Work
 ### Tools, libraries, blogs, or any documentation that we have used to do this project
+- 나이브 베이즈
+  - https://www.datacamp.com/tutorial/naive-bayes-scikit-learn
+  - https://ineed-coffee.github.io/posts/Naive-Bayesian/
++ 랜덤포래스트
+  + https://www.datacamp.com/tutorial/random-forests-classifier-python
+  + https://ineed-coffee.github.io/posts/RandomForest/
+  + https://hleecaster.com/ml-random-forest-concept/
 
 ## VI. Conclusion: Discussion
 ### Feel free to use any format we like
