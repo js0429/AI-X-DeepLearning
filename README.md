@@ -21,23 +21,35 @@
 우리의 골은 특정한 상황이 주어젔을 때 어느 정도의 교통체증이 일어날지를 예측하는 모델을 만드는 것이고 우리가 일반적으로 생각하지 못했던 교통체증 원인도 발견하길 기대한다. 
 ## II. Datasets
 먼저 국내 교통체증을  경기도 교통DB, 국가교통 데이터에서 가져온 데이터셋을 사용할 것이다.
+```
+데이터셋 링크  
+추정교통량  
+- https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020420  
 
-추정교통량 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020420  
-대도시 미개발 토지 정보 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020277  
-평균속도 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020421  
-역세권 공동주택 실거래 정보 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020052  
-시간대별 일반국도 교통량 참고 페이지(파일은 위에 별도로 첨부하겠다) - https://gits.gg.go.kr/gtdb/web/trafficDb/trafficVolume/alwaysTrafficVolumeByTime.do
+대도시 미개발 토지 정보  
+- https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020277  
 
-데이터셋들을 정제할 때 파이썬을 이용할 것이고 판다스 모듈을 사용할 것이다.
+평균속도  
+- https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020421  
 
+역세권 공동주택 실거래 정보  
+- https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020052  
+
+시간대별 일반국도 교통량 참고 페이지(파일은 위에 별도로 첨부하겠다)  
+- https://gits.gg.go.kr/gtdb/web/trafficDb/trafficVolume/alwaysTrafficVolumeByTime.do  
+```
+
+데이터셋들을 정제할 때 파이썬을 이용할 것이고 판다스 모듈을 사용할 것이다.  
 판다스 모듈을 사용하기 위해 다음과 같은 작업을 진행하자
+```
 1) cmd창 열기
 2) pip install pandas 입력후 엔터
+```
 
 위의 가져온 데이터셋들은 모두 경기도 내의 읍/면/동에 대한 정보를 가지고 있다 따라서 경기도 읍/면/동을 행으로 그룹핑 하므로써 데이터셋들을 통합할 것이다. 
 이때 알고가야 할 점은 데이터셋마다 읍/면/동에 대한 정보는 가지고 있지만 형식에 차이가 있기 때문에 형식을 통일하며 그룹핑 해야한다.  
 
-먼저 시간대별 일반국도 교통량 데이터셋들을 result.csv 파일로 통합하자
+먼저 시간대별 일반국도 교통량 데이터셋들을 result.csv 파일로 통합하자  
 ```python
 import pandas as pd  
 df1=pd.read_execl('./일반국도 1-6.xlsx')  #경로를 참고하여 파일을 읽어 데이터프레임으로 저장한다
@@ -50,10 +62,10 @@ df6=pd.read_execl('./일반국도 77-87.xlsx')
 df=pd.concat([df1,df2,df3,df4,df,df6])  
 df.to_csv('./df_integra.csv')  
 ```
-다음은 대도시 미개발 토지 정보 데이터셋을 정리해보자
-이 데이터셋은 경기도 외의 시도가 포함되어 있고 읍/면/동에서 끝에 불필요한 코드가 있으니 이것들을 제거해주어야 하고 각 읍/면/동 별로 몇개의 미개발 토지가 있는지의 정보를 추출하면 된다.
-경기도 행은 중간에서 마지막 줄까지 차지하기에 메모장으로 열어 따로 추출하였다.
-읍/면/동의 불필요한 코드 제거와 토지 개수 추출은 파이썬을 이용해준다
+다음은 대도시 미개발 토지 정보 데이터셋을 정리해보자  
+이 데이터셋은 경기도 외의 시도가 포함되어 있고 읍/면/동에서 끝에 불필요한 코드가 있으니 이것들을 제거해주어야 하고 각 읍/면/동 별로 몇개의 미개발 토지가 있는지의 정보를 추출하면 된다.  
+경기도 행은 중간에서 마지막 줄까지 차지하기에 메모장으로 열어 따로 추출하였다.  
+읍/면/동의 불필요한 코드 제거와 토지 개수 추출은 파이썬을 이용해준다  
 ```python
 import pandas as pd
 df_ground=pd.read_csv('./대도시 미개발 토지 정보.csv')
@@ -64,8 +76,8 @@ for i in range(len(df_ground)):
 df_ground=df_ground.groupby('행정구역').count()
 df_ground[['pnu']].to_csv('./df_ground.csv')
 ```
-다음은 추정교통량 데이터셋을 정리하여 통합해보자
-이 데이터는 읍/면/동에 대한 정보가 코드로 적혀 있기에 코드에 맞게 행정구역을 적어주자(읍면동 코드는 따로 첨부하겠다)
+다음은 추정교통량 데이터셋을 정리하여 통합해보자  
+이 데이터는 읍/면/동에 대한 정보가 코드로 적혀 있기에 코드에 맞게 행정구역을 적어주자(읍면동 코드는 따로 첨부하겠다)  
 ```python
 import pandas as pd
 df_might = pd.read_csv('./2019년_추정교통량_행정구역_읍면동단위.csv')
@@ -80,8 +92,8 @@ df_vel.dropna(axis=0, how='any', inplace=True)
 df_vel.index=list(range(len(df_vel)))
 df_vel.to_csv('./df_might.csv')
 ```
-다음은 평균속도 데이터셋을 정리해보자
-이 데이터 또한 추정교통량 데이터셋과 형식은 동일하기에 같은 방법으로 정리해준다
+다음은 평균속도 데이터셋을 정리해보자  
+이 데이터 또한 추정교통량 데이터셋과 형식은 동일하기에 같은 방법으로 정리해준다  
 ```python
 import pandas as pd
 df_vel = pd.read_csv('./2019년_평균속도_행정구역_읍면동단위.csv')
@@ -96,8 +108,8 @@ df_vel.dropna(axis=0, how='any', inplace=True)
 df_vel.index=list(range(len(df_vel)))
 df_vel.to_csv('./df_vel.csv')
 ```
-다음은 역세권 공동주택 실거래 정보 데이터셋을 정리해보자
-역세권 공동주택은 거래된 가격을 주출하려 하지만 전세, 월세, 매매 세가지의 방식에 따라 가격 데이터가 남아있는 형식이라 가장 많은 전세만 데이터로 사용한다.
+다음은 역세권 공동주택 실거래 정보 데이터셋을 정리해보자  
+역세권 공동주택은 거래된 가격을 주출하려 하지만 전세, 월세, 매매 세가지의 방식에 따라 가격 데이터가 남아있는 형식이라 가장 많은 전세만 데이터로 사용한다.  
 ```python
 import pandas as pd
 df_trans=pd.read_csv('./2023_역세권 공동주택 실거래정보.csv')
@@ -113,9 +125,8 @@ for i in range(len(df_trans)): #행정구역(읍/면/동)의 불필요한 정보
 df_trans=df_trans.groupby('adres_nm').sum()
 df_trans.to_csv('./df_trans.csv')
 ```
-
 이제 모든 데이터셋을 정리하였다  
-각 데이터셋은 행정구역 중 읍/면/동이 가장 뒤쪽에 포함된 문자열을 데이터로 가지고 있으므로 이것을 가지고 통합한다
+각 데이터셋은 행정구역 중 읍/면/동이 가장 뒤쪽에 포함된 문자열을 데이터로 가지고 있으므로 이것을 토대로 통합한다
 ```python
 import pandas as pd
 
@@ -137,7 +148,7 @@ test=integration(df_integra,df_ground,'count')
 test=integration(df_integra,df_might,'FGCR_AADT')
 test=integration(df_integra,df_trans,'assrnc_amt')
 test=integration(df_integra,df_vel,'velocity_AVRG')
-test.to_csv('./df_final.csv')
+test.to_csv('./dataset.csv')
 ```
 ## III. Methodology
 ### Algorithms
