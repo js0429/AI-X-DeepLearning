@@ -16,19 +16,31 @@
 
 ## I. Proposal
 ### Motivation
-누구나 자동차를 타다가 종종 밀리는 구간을 만나본 경험이 있을 것이다. 이를 경험적으로 출퇴근 시간이나 사람이 많이 사는 지역 때문에 밀리는 것이라고 추론하곤 하는데 인공지능도 이러한 추론이 가능할 것 같았고, 또한 인공지능 학습에 필요한 특징들이 비교적 뚜렷하고 많을 것으로 예상되어 교통체증 구간 예측을 주제로 정하였다.     
+누구나 자동차를 타다가 종종 밀리는 구간을 만나본 경험이 있을 것이다. 이를 경험적으로 출퇴근 시간이나 사람이 많이 사는 지역 때문에 밀리는 것이라고 추론하곤 하였다. 인공지능 또한 이러한 추론이 가능할 것 같았고 인공지능 학습에 필요한 특징들이 비교적 뚜렷하고 많을 것으로 예상되어 교통체증 구간 예측을 주제로 정하였다.     
 ### Goal
 우리의 골은 특정한 상황이 주어젔을 때 어느 정도의 교통체증이 일어날지를 예측하는 모델을 만드는 것이고 우리가 일반적으로 생각하지 못했던 교통체증 원인도 발견하길 기대한다. 
 ## II. Datasets
-국내의 교통과 관련된 데이터셋을 만들기 위해 경기도 교통DB, 국가교통 데이터에서 가져온 데이터를 사용한다.  
-파이썬의 판다스 모듈을 사용하여 행과 열의 속성을 가지는 자료형인 데이터프레임을 처리할 것이고 가져온 파일 형식은 csv이다  
-먼저 행의 항목에 올 것은 읍면동이기 때문에 읍면동을 기준으로 여기저기서 갖고온 데이터들을 병합하는 것이 목표이며 타겟 데이터는 시간대별 교통량이다  
+먼저 국내 교통체증을  경기도 교통DB, 국가교통 데이터에서 가져온 데이터셋을 사용할 것이다.
 
-각기 다른 데이터셋마다 읍면동을 표현하는 것이 조금씩 차이가 있기 때문에 읍면동의 데이터들의 형식을 통일해야 한다.  
-(읍면동의 데이터 형식을 통일하는 코드 넣을 것)  
+추정교통량 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020420  
+대도시 미개발 토지 정보 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020277  
+평균속도 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020421  
+역세권 공동주택 실거래 정보 - https://www.bigdata-transportation.kr/frn/prdt/detail?prdtId=PRDTNUM_000000020052  
+시간대별 일반국도 교통량 참고 페이지(파일은 위에 별도로 첨부하겠다) - https://gits.gg.go.kr/gtdb/web/trafficDb/trafficVolume/alwaysTrafficVolumeByTime.do
 
+데이터셋들을 정제할 때 파이썬을 이용할 것이고 판다스 모듈을 사용할 것이다.
+
+판다스 모듈을 사용하기 위해 다음과 같은 작업을 진행하자
+1) cmd창 열기
+2) pip install pandas 입력후 엔터
+
+위의 가져온 데이터셋들은 모두 경기도 내의 읍/면/동에 대한 정보를 가지고 있다 따라서 경기도 읍/면/동을 행으로 그룹핑 하므로써 데이터셋들을 통합할 것이다. 
+이때 알고가야 할 점은 데이터셋마다 읍/면/동에 대한 정보는 가지고 있지만 형식에 차이가 있기 때문에 형식을 통일하며 그룹핑 해야한다.  
+
+먼저 시간대별 일반국도 교통량 데이터셋들을 result.csv 파일로 통합하자
+```python
 import pandas as pd  
-df1=pd.read_execl('./일반국도 1-6.xlsx')  
+df1=pd.read_execl('./일반국도 1-6.xlsx')  #경로를 참고하여 파일을 읽어 데이터프레임으로 저장한다
 df2=pd.read_execl('./일반국도 17-38.xlsx')  
 df3=pd.read_execl('./일반국도 39-43.xlsx')  
 df4=pd.read_execl('./일반국도 44-46.xlsx')  
@@ -36,14 +48,97 @@ df5=pd.read_execl('./일반국도 47-75.xlsx')
 df6=pd.read_execl('./일반국도 77-87.xlsx')  
 
 df=pd.concat([df1,df2,df3,df4,df,df6])  
-df.to_csv('./result.csv')  
+df.to_csv('./df_integra.csv')  
+```
+다음은 대도시 미개발 토지 정보 데이터셋을 정리해보자
+이 데이터셋은 경기도 외의 시도가 포함되어 있고 읍/면/동에서 끝에 불필요한 코드가 있으니 이것들을 제거해주어야 하고 각 읍/면/동 별로 몇개의 미개발 토지가 있는지의 정보를 추출하면 된다.
+경기도 행은 중간에서 마지막 줄까지 차지하기에 메모장으로 열어 따로 추출하였다.
+읍/면/동의 불필요한 코드 제거와 토지 개수 추출은 파이썬을 이용해준다
+```python
+import pandas as pd
+df_ground=pd.read_csv('./대도시 미개발 토지 정보.csv')
+for i in range(len(df_ground)):
+    tmp=df_ground.loc[i,'행정구역'].split()
+    del tmp[-1]
+    df_ground.loc[i,'행정구역'] = ' '.join(tmp)
+df_ground=df_ground.groupby('행정구역').count()
+df_ground[['pnu']].to_csv('./df_ground.csv')
+```
+다음은 추정교통량 데이터셋을 정리하여 통합해보자
+이 데이터는 읍/면/동에 대한 정보가 코드로 적혀 있기에 코드에 맞게 행정구역을 적어주자(읍면동 코드는 따로 첨부하겠다)
+```python
+import pandas as pd
+df_might = pd.read_csv('./2019년_추정교통량_행정구역_읍면동단위.csv')
+df_code = pd.read_csv('./읍면동 코드2.csv')
+df_vel=df_vel[['emd_code','FGCR_AADT']]
+df_vel['행정구역']=''
+for i in range(len(df_vel)):
+    for j in range(len(df_code)):
+        if df_vel.loc[i,'emd_code'] == df_code.loc[j,'emd_code']:
+            df_vel.loc[i,'행정구역'] = df_code.loc[j,'행정구역']
+df_vel.dropna(axis=0, how='any', inplace=True)
+df_vel.index=list(range(len(df_vel)))
+df_vel.to_csv('./df_might.csv')
+```
+다음은 평균속도 데이터셋을 정리해보자
+이 데이터 또한 추정교통량 데이터셋과 형식은 동일하기에 같은 방법으로 정리해준다
+```python
+import pandas as pd
+df_vel = pd.read_csv('./2019년_평균속도_행정구역_읍면동단위.csv')
+df_code = pd.read_csv('./읍면동 코드2.csv')
+df_vel=df_vel[['emd_code','velocity_AVRG']]
+df_vel['행정구역']=''
+for i in range(len(df_vel)):
+    for j in range(len(df_code)):
+        if df_vel.loc[i,'emd_code'] == df_code.loc[j,'emd_code']:
+            df_vel.loc[i,'행정구역'] = df_code.loc[j,'행정구역']
+df_vel.dropna(axis=0, how='any', inplace=True)
+df_vel.index=list(range(len(df_vel)))
+df_vel.to_csv('./df_vel.csv')
+```
+다음은 역세권 공동주택 실거래 정보 데이터셋을 정리해보자
+역세권 공동주택은 거래된 가격을 주출하려 하지만 전세, 월세, 매매 세가지의 방식에 따라 가격 데이터가 남아있는 형식이라 가장 많은 전세만 데이터로 사용한다.
+```python
+import pandas as pd
+df_trans=pd.read_csv('./2023_역세권 공동주택 실거래정보.csv')
+df_trans=df_trans[['adres_nm','trns_clsf','assrnc_amt']] #각각 행정구역, 거래방식, 거래가격이다
+df_trans=df_trans[df_trans['trns_clsf']=='전세']
+df_trans.index=list(range(len(df_trans)))
 
-df_time=pd.read_csv('./result')  
-df_ground=pd.read_csv('./대도시 미개발 토지 정보.csv')  
-df_time=df_time[['지점번호','시간대','행정구역','지점번호','전차종합계']]  
-df=df.merge(df_ground, how='inner', on='행정구역')  
+df_trans=df_trans[['adres_nm','assrnc_amt']]
+for i in range(len(df_trans)): #행정구역(읍/면/동)의 불필요한 정보는 제거해준다
+    tmp=df_trans.loc[i,'adres_nm'].split()
+    del tmp[-1]
+    df_trans.loc[i,'adres_nm']=' '.join(tmp) 
+df_trans=df_trans.groupby('adres_nm').sum()
+df_trans.to_csv('./df_trans.csv')
+```
 
-(결과로 나온 파일은 깃헙에 올릴 것)  
+이제 모든 데이터셋을 정리하였다  
+각 데이터셋은 행정구역 중 읍/면/동이 가장 뒤쪽에 포함된 문자열을 데이터로 가지고 있으므로 이것을 가지고 통합한다
+```python
+import pandas as pd
+
+df_ground=pd.read_csv('./df_ground.csv',index_col=0)
+df_integra=pd.read_csv('./df_integra.csv',index_col=0)
+df_might=pd.read_csv('./df_might3.csv',index_col=0)
+df_trans=pd.read_csv('./df_trans.csv',ubdex_col=0)
+df_vel=pd.read_csv('./df_vel.csv',index_col=0)
+def integration(a,b,txt):
+    a[txt]=''
+    for i in range(len(a)):
+        tmpa = a.loc[i,'행정구역'].split()
+        for j in range(len(b)):
+            tmpb = b.loc[j,'행정구역'].split()
+            if tmpa[-1] == tmpb[-1]:
+                a.loc[i,txt]=b.loc[j,txt]
+    return a
+test=integration(df_integra,df_ground,'count')
+test=integration(df_integra,df_might,'FGCR_AADT')
+test=integration(df_integra,df_trans,'assrnc_amt')
+test=integration(df_integra,df_vel,'velocity_AVRG')
+test.to_csv('./df_final.csv')
+```
 ## III. Methodology
 ### Algorithms
 
