@@ -314,9 +314,6 @@ print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
   + https://ineed-coffee.github.io/posts/RandomForest/
   + https://hleecaster.com/ml-random-forest-concept/
 
-## VI. Conclusion: Discussion
-
-
 <br>
 
 >신지성: 데이터셋 찾고 통합 및 처리 <br>
