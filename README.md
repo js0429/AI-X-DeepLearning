@@ -149,23 +149,34 @@ test=integration(df_integra,df_vel,'velocity_AVRG')
 test.to_csv('./dataset.csv')
 ```
 ## III. Methodology
-### Algorithms
-
 <p align = 'center'>
   <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/methology.png'>
 </p>
+&nbsp; 분류를 실행할때의 작업 흐름이다.<br>위 사진과 같이 데이터셋을 훈련과 테스트에 쓰일 두 개로 분리하고, 훈련용 데이터셋으로 모델을 학습하고 데스트용 데이터셋으로 모델을 평가하고, 정확도를 알아볼것이다 
+
+### Algorithms
+
+
 
 
 다음은 데이터셋을 분석하고 예측하는 모델을 만들기 위해 사용된 알고리즘이다. <br>
 
- * <b>나이브 베이즈(Naive Bayes) :</b>  
+ * <b>나이브 베이즈(Naive Bayes) :</b>
+
+&nbsp; 각 변수가 독립적이라는 가정하에 확률에 기반하여 데이터를 분류하는 방법  
 
 <p align = 'center'>
     <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/nb02.png'>
 </p>
 
-&nbsp; 각 변수가 독립적이라는 가정하에 확률에 기반하여 데이터를 분류하는 방법  
-> (설명)
+> 위 식이 나이브 베이즈 에 쓰이는 베이즈 공식이다. 식을 해석해보자면<br>
+>* P(h): 데이터에 관계없이 가설 h의 가능성이 참일 확률 (h의 사전 확률)
+>* P(D): 가설에 관게없이 데이터의 가능성이 참일 확률 (사전 확률)
+>* P(h|D): 데이터가 참일때 가설 h가 참일 확률 (h의 사후 확률)
+>* P(D|h): 가설 h가 참일때 데이터가 참일 확률 (사후 확률)
+
+>사전 확률은 특정 사건이 일어나기 전의 확률을 말하고, 사후 확률은 한 사건이 일어난 후의 확률을 말한다
+
 
 &nbsp; 많은 상황에서 쓰였을 때 일반적으로 좋은 성능을 보이는 알고리즘이기에 하나의 방법으로 채택하였다.  
   
@@ -174,16 +185,20 @@ test.to_csv('./dataset.csv')
 
 <p align = 'center'>
   <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/rf02.png'>
-</p>
+</p> 
 
 &nbsp; <span>의사결정 나무(Decision Tree)의 단점을 보완한 모델로 훈련으로 구성해놓은 다수의 의사결정 나무로부터 분류결과를 취합해 결론을 얻는 방법</span>
+
+>랜덤포레스트의 설명을 위해 예를 보자면
 
 <p align = 'center'>
   <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/rf01.png'>
 </p>
+
+>위의 사진은 "이번 시험에서 A를 받을 수 있는가?"를 랜덤포레스트를 통해 예측한 것인데<br>특성이 수면시간 (8시간 이상), 컷닝 할 계획 (없음), 공부 한 시간 (3시간 이하), 평균 학점 (B) 일때 11개의 의사결정 나무가 YES를 6개, NO를 5개 내보냈기에 랜덤포레스트 모델의 예측값은 YES 로 나오게 된다는 것을 설명해준다
       
 
-&nbsp; 데이터가 잘 문서화되어있어야 효과적인 모델이므로 이번 프로젝트에 사용되기 부적합 할 수 있지만 다른 모델들과의 비교를 위하여 채택하였다.  <br>
+&nbsp; 데이터가 잘 문서화되어있어야 효과적인 모델이므로 이번 프로젝트에 사용되기 부적합 할 수 있지만 다른 모델과의 비교를 위하여 채택하였다.  <br>
     
   
 ### Features
@@ -278,7 +293,11 @@ nb_accuracy = accuracy_score(y_test, nb_predicted)
 
 print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
 ```
+<p align = 'center'>
+  <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/accuracy.png'>
+</p>
 
+>결과는 다음과 같이 나왔다
 
 
 ## V. Related Work
@@ -289,12 +308,17 @@ print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
 - 나이브 베이즈
   - https://www.datacamp.com/tutorial/naive-bayes-scikit-learn
   - https://ineed-coffee.github.io/posts/Naive-Bayesian/
+
 + 랜덤포래스트
   + https://www.datacamp.com/tutorial/random-forests-classifier-python
   + https://ineed-coffee.github.io/posts/RandomForest/
   + https://hleecaster.com/ml-random-forest-concept/
 
 ## VI. Conclusion: Discussion
-신지성: 데이터셋 찾고 통합 및 처리 
-권영진: 
-종예기: 데이터셋 찾기
+
+
+<br>
+
+>신지성: 데이터셋 찾고 통합 및 처리 <br>
+    권영진:  <br> 
+    종예기: 데이터셋 찾기
