@@ -1,4 +1,5 @@
 # AI-X-DeepLearning
+> 동영상 링크: https://youtu.be/TZccazEeNqw
 ## 목차
 
 1. [Proposal](#i-proposal)
