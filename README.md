@@ -151,20 +151,39 @@ test.to_csv('./dataset.csv')
 ## III. Methodology
 ### Algorithms
 
+<p align = 'center'>
+  <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/methology.png'>
+</p>
+
+
 다음은 데이터셋을 분석하고 예측하는 모델을 만들기 위해 사용된 알고리즘이다. <br>
 
  * <b>나이브 베이즈(Naive Bayes) :</b>  
 
-    &nbsp; 각 변수가 독립적이라는 가정하에 확률에 기반하여 데이터를 분류하는 방법  
+<p align = 'center'>
+    <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/nb02.png'>
+</p>
 
-    &nbsp; 많은 상황에서 쓰였을 때 일반적으로 좋은 성능을 보이는 알고리즘이기에 하나의 방법으로 채택하였다.  
+&nbsp; 각 변수가 독립적이라는 가정하에 확률에 기반하여 데이터를 분류하는 방법  
+> (설명)
+
+&nbsp; 많은 상황에서 쓰였을 때 일반적으로 좋은 성능을 보이는 알고리즘이기에 하나의 방법으로 채택하였다.  
   
 
-* <b>랜덤 포레스트(Random Forest) :</b>    
-      
-    &nbsp; <span>의사결정 나무(Decision Tree)의 단점을 보완한 모델로 훈련으로 구성해놓은 다수의 의사결정 나무로부터 분류결과를 취합해 결론을 얻는 방법</span>
+* <b>랜덤 포레스트(Random Forest) :</b>
 
-    &nbsp; 데이터가 잘 문서화되어있어야 효과적인 모델이므로 이번 프로젝트에 사용되기 부적합 할 수 있지만 다른 모델들과의 비교를 위하여 채택하였다.  <br>
+<p align = 'center'>
+  <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/rf02.png'>
+</p>
+
+&nbsp; <span>의사결정 나무(Decision Tree)의 단점을 보완한 모델로 훈련으로 구성해놓은 다수의 의사결정 나무로부터 분류결과를 취합해 결론을 얻는 방법</span>
+
+<p align = 'center'>
+  <img src = 'https://github.com/js0429/AI-X-DeepLearning/blob/main/rf01.png'>
+</p>
+      
+
+&nbsp; 데이터가 잘 문서화되어있어야 효과적인 모델이므로 이번 프로젝트에 사용되기 부적합 할 수 있지만 다른 모델들과의 비교를 위하여 채택하였다.  <br>
     
   
 ### Features
@@ -260,8 +279,13 @@ nb_accuracy = accuracy_score(y_test, nb_predicted)
 print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
 ```
 
+
+
 ## V. Related Work
 ### Tools, libraries, blogs, or any documentation that we have used to do this project
+* 알고리즘 선택
+    * https://tensorflow.blog/머신-러닝의-모델-평가와-모델-선택-알고리즘-선택-1/
+
 - 나이브 베이즈
   - https://www.datacamp.com/tutorial/naive-bayes-scikit-learn
   - https://ineed-coffee.github.io/posts/Naive-Bayesian/
