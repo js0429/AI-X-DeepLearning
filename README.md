@@ -12,7 +12,7 @@
 ## Members
 - 신지성 | 한양대 에리카 ICT융합학부 js0429@hanyang.ac.kr
 - 권영진 | 한양대 에리카 ICT융합학부 zjekfks@hanyang.ac.kr
-- 종예기 | 한양대 에리카 정보사회미디어
+- 종예기 | 한양대 에리카 정보사회미디어 jongyeki@gmail.com
 
 ## I. Proposal
 ### Motivation
@@ -320,5 +320,5 @@ print('나이브 베이스 정확도: {:.3f}' .format(nb_accuracy))
 <br>
 
 >신지성: 데이터셋 찾고 통합 및 처리 <br>
-    권영진:  <br> 
+    권영진: 예측 모델 코드, 블로그 작성<br> 
     종예기: 데이터셋 찾기
