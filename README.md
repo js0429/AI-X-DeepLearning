@@ -6,8 +6,7 @@
 3. [Methodology](#iii-methodology)
 4. [Evaluation & Analysis](#iv-evaluation--analysis)
 5. [Related Work](#v-related-work)
-6. [Conclusion](#vi-conclusion-discussion)
-
+   
 ## Title: 교통체증 구간 예측
 ## Members
 - 신지성 | 한양대 에리카 ICT융합학부 js0429@hanyang.ac.kr
